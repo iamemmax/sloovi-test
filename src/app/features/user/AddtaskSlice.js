@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { AddTask, DeleteTask } from "./userService"
+import axios from "axios";
+const API_URL = "https://stage.api.sloovi.com"
 
 
 
@@ -44,11 +46,49 @@ export const DeleteUserTask = createAsyncThunk(
     }
   }
 );
+export const UpdateUserTask = createAsyncThunk(
+  "auth/update task",
+  async (userData, thunkAPI) => {
+    try {
+      let company_Id = thunkAPI.getState().auth.user.company_id
+      let Token = thunkAPI.getState().auth.user.token
+
+      let { id, input } = userData
+
+      var hms = input?.task_time;  // time input string
+      var a = hms.split(':'); // split it at the colons
+      // minutes are worth 60 seconds. Hours are worth 60 minutes.
+      var taskTimeSeconds = (+a[0]) * 60 * 60 + (+a[1]);
+
+      const response = await axios.put(`${API_URL}/task/lead_465c14d0e99e4972b6b21ffecf3dd691/${id}?company_id=${company_Id}`,
+        { ...input, task_time: taskTimeSeconds }, {
+        headers: {
+
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + Token,
+
+        }
+      }
+      );
+      return response.data;
+    } catch (error) {
+      let message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 
 const initialState = {
   task: [],
   deletedTask: [],
+  updatedTask: [],
   isLoading: false,
   isSuccess: false,
   isError: false,
@@ -68,7 +108,7 @@ export const taskSlice = createSlice({
   extraReducers: (builder) => {
     builder
 
-      // login user
+      // add user task
       .addCase(AddUserTask.pending, (state) => {
         state.isLoading = true;
       })
@@ -83,6 +123,24 @@ export const taskSlice = createSlice({
         state.isSuccess = false;
         state.isError = true;
         state.task = null;
+        state.message = action.payload;
+      })
+
+      // update user task
+      .addCase(UpdateUserTask.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(UpdateUserTask.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.updatedTask = action.payload;
+
+      })
+      .addCase(UpdateUserTask.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.updatedTask = null;
         state.message = action.payload;
       })
 

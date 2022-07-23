@@ -62,7 +62,7 @@ export default function ListTask({ data }) {
           </IconButton>
         }
         title={data.task_msg}
-        subheader={moment(data.task_date).subtract(6, 'days').calendar()}
+        subheader={moment(data.inbox_display_date).subtract(6, 'days').calendar()}
       />
 
       <CardContent>

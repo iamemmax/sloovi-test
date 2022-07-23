@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Accordion, Grid, Select, AccordionDetails, AccordionSummary, InputAdornment, TextField, Typography, MenuItem, InputLabel, FormControl, Button, Container } from "@mui/material"
+import { Accordion, Stack, Grid, Select, AccordionDetails, AccordionSummary, InputAdornment, TextField, Typography, MenuItem, InputLabel, FormControl, Button, Container } from "@mui/material"
 import { FaPlus, FaUser } from "react-icons/fa"
 import { useSelector, useDispatch } from 'react-redux';
-import { AddUserTask, reset } from "../app/features/user/AddtaskSlice"
+import { UpdateUserTask, reset } from "../app/features/user/AddtaskSlice"
 import { FetchTask } from "../app/features/user/fetchTask"
 
 const UpdateTask = ({ data }) => {
@@ -19,21 +19,24 @@ const UpdateTask = ({ data }) => {
         time_zone: offset,
         is_completed
     })
-    console.log(users)
-    const dispatch = useDispatch()
+    let userData = { id: data.id, input }
 
+
+    const dispatch = useDispatch()
+    console.log(userData)
     const handleInput = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value })
     }
 
     const handleSubmit = (e) => {
+        e.preventDefault()
         // setInput({ ...input, [e.target.name]: e.target.value })
+        dispatch(UpdateUserTask(userData))
+        dispatch(reset())
     }
 
 
 
-
-    // let { task_msg, task_date, task_time, assigned_user, time_zone } = input
 
 
     return (
@@ -48,7 +51,7 @@ const UpdateTask = ({ data }) => {
                                 type="text"
                                 label="Task Description"
                                 name="task_msg"
-                                value={task_msg}
+                                defaultValue={task_msg}
                                 fullWidth
                                 onChange={handleInput}
 
@@ -73,8 +76,9 @@ const UpdateTask = ({ data }) => {
                                 <Grid item sm={6}>
 
                                     <div className="date">
-                                        <TextField type="date" onChange={handleInput}
-                                            value={{}} name="task_date" label="Date" variant='outlined' fullWidth />
+
+                                        <TextField type="date" onChange={handleInput} name="task_date" defaultValue={task_date} label="date" variant='outlined' fullWidth />
+
                                     </div>
 
 
@@ -82,7 +86,7 @@ const UpdateTask = ({ data }) => {
                                 <Grid item sm={6}>
 
                                     <div className="timetime">
-                                        <TextField type="time" onChange={handleInput} name="task_time" value={{}} label="Time" variant='outlined' fullWidth />
+                                        <TextField type="time" onChange={handleInput} name="task_time" defaultValue={task_time} label="Time" variant='outlined' fullWidth />
                                     </div>
 
                                 </Grid>
@@ -98,7 +102,7 @@ const UpdateTask = ({ data }) => {
                                 <Select
                                     labelId="demo-select-small"
                                     id="demo-select-small"
-                                    value={assigned_user}
+                                    defaultValue={assigned_user}
                                     name="assigned_user"
                                     label="Assign user"
                                     onChange={handleInput}
@@ -121,9 +125,9 @@ const UpdateTask = ({ data }) => {
                                 <Select
                                     labelId="demo-select-small"
                                     id="demo-select-small"
-                                    value={is_completed}
-                                    name="assigned_user"
-                                    label="Assign user"
+                                    defaultValue={is_completed}
+                                    name="is_completed"
+                                    label="is_completed"
                                     onChange={handleInput}
 
                                 >

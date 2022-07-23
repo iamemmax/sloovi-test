@@ -77,6 +77,13 @@ export const AddTask = async (userData, company_id, token) => {
   return response.data;
 };
 
+// export const UpdateTask = async (userData, company_id, token) => {
+
+//   console.log(id)
+//   console.log({ hms, a });
+//   return response.data;
+// };
+
 
 export const GetTask = async (company_id, token) => {
   const response = await axios.get(`${API_URL}/task/lead_465c14d0e99e4972b6b21ffecf3dd691?company_id=${company_id}`, {
@@ -88,7 +95,7 @@ export const GetTask = async (company_id, token) => {
     },
 
   });
-  // console.log(response.data);
+  console.log(response.data);
   return response.data;
 };
 
