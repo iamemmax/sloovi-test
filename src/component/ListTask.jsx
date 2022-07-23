@@ -1,14 +1,9 @@
 import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
+import { Card, Modal, CardHeader, CardActions, CardContent, Collapse, Avatar, Typography, Box } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
+
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import { green } from '@mui/material/colors';
 import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
@@ -17,7 +12,7 @@ import moment from "moment"
 import { useDispatch, useSelector } from 'react-redux';
 import { DeleteUserTask, reset } from "../app/features/user/AddtaskSlice"
 import UpdateTask from './UpdateTask';
-
+import Styles from "../pages/style/home.module.scss"
 
 
 
@@ -47,10 +42,22 @@ export default function ListTask({ data }) {
     dispatch(reset())
   }
 
-
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    boxShadow: 44,
+    p: 4,
+  };
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
-    <Card sx={{ maxWidth: 345 }} >
+    <Card sx={{ maxWidth: 345 }} className={Styles.card} >
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: green[500] }} aria-label="task">
@@ -61,40 +68,47 @@ export default function ListTask({ data }) {
           <IconButton aria-label="settings">
           </IconButton>
         }
-        title={data.task_msg}
-        subheader={moment(data.inbox_display_date).subtract(6, 'days').calendar()}
+        // title={data.is_completed === 0 ? "Not completed" : "Task Completed"}
+        title={moment(data.inbox_display_date).subtract(6, 'days').calendar()}
+        // subheader={}
+        className={Styles.task_header}
       />
 
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="secondary" className={Styles.task_msg}>
+          {data.task_msg}
+        </Typography>
+
+        <Typography variant="body2" className={Styles.completed}>
           {data.is_completed === 0 ? "Not completed" : "Task Completed"}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           {/* <FavoriteIcon /> */}
-          <AiOutlineDelete onClick={() => handleRemoveTask(data.id)} />
+          <AiOutlineDelete onClick={() => handleRemoveTask(data.id)} className={Styles.deletedIcon} />
 
 
         </IconButton>
         <IconButton aria-label="share">
           {/* <ShareIcon /> */}
+          <FiEdit className={Styles.editIcon} onClick={handleOpen} />
         </IconButton>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
+
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
         >
-          {/* <ExpandMoreIcon /> */}
-          <FiEdit />
-        </ExpandMore>
+          <Box sx={style} className={Styles.Box}>
+            <UpdateTask data={data} />
+
+          </Box>
+        </Modal>
+
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <UpdateTask data={data} />
-        </CardContent>
-      </Collapse>
+
     </Card>
   );
 }

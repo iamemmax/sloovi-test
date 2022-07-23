@@ -8,7 +8,7 @@ import { AddTask } from '../component/AddTask';
 import Loading from './../component/config/Loading';
 import ListTask from '../component/ListTask';
 
-
+import Styles from "./style/home.module.scss"
 
 export const Homepages = () => {
 
@@ -21,27 +21,32 @@ export const Homepages = () => {
 
 
   return (
-    <Container>
-      <AddTask />
-      <br />
-      <div>
-        {isLoading ? <Loading /> : <>
-          <Typography variant="h4" component="h2">All Task</Typography>
-          <Grid container spacing={3}>
-            {task?.map(x => (
-              <Grid item md={3} lg={4}>
-                <ListTask key={x.id} data={x} />
-              </Grid>
-            )
-            )}
-          </Grid>
-        </>}
-      </div>
+    <div className={Styles.container}>
+      <Container className={Styles.wrapper}>
+        <AddTask />
+        <br />
+        <div>
+          {isLoading ? <Loading /> : <>
+            {/* <div className={Styles.createBtn}>
+              <Button variant="contained" color="secondary" className={Styles.btn}>Create Task</Button>
+            </div> */}
+            <Typography variant="h4" component="h2" className={Styles.header}>ALL TASKS</Typography>
+            <Grid container spacing={3}>
+              {task?.map(x => (
+                <Grid item md={3} lg={4}>
+                  <ListTask key={x.id} data={x} />
+                </Grid>
+              )
+              )}
+            </Grid>
+          </>}
+        </div>
 
 
-      {/* list all task */}
+        {/* list all task */}
 
-    </Container>
+      </Container>
+    </div>
   )
 }
 

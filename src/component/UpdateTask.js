@@ -4,6 +4,8 @@ import { FaPlus, FaUser } from "react-icons/fa"
 import { useSelector, useDispatch } from 'react-redux';
 import { UpdateUserTask, reset } from "../app/features/user/AddtaskSlice"
 import { FetchTask } from "../app/features/user/fetchTask"
+import Styles from "../pages/style/home.module.scss"
+
 
 const UpdateTask = ({ data }) => {
     const { users } = useSelector(auth => auth.users)
@@ -40,10 +42,12 @@ const UpdateTask = ({ data }) => {
 
 
     return (
-        <Container>
+        <Container className={Styles.update_container}>
+
             <Grid container spacing={3}>
 
                 <Grid item sm={12}>
+                    <Typography variant="h5" component="h5" sx={{ padding: "20px", textAlign: "center", fontWeight: "600" }}>UPDATE TASK</Typography>
 
                     <form method="post" onSubmit={handleSubmit}>
                         <div className="password">
@@ -72,12 +76,12 @@ const UpdateTask = ({ data }) => {
                         </div>
                         <br />
                         <div className="grid">
-                            <Grid container spacing={2}>
+                            <Grid container spacing={1}>
                                 <Grid item sm={6}>
 
                                     <div className="date">
 
-                                        <TextField type="date" onChange={handleInput} name="task_date" defaultValue={task_date} label="date" variant='outlined' fullWidth />
+                                        <TextField type="date" onChange={handleInput} name="task_date" defaultValue={task_date} variant='outlined' fullWidth />
 
                                     </div>
 
@@ -86,7 +90,7 @@ const UpdateTask = ({ data }) => {
                                 <Grid item sm={6}>
 
                                     <div className="timetime">
-                                        <TextField type="time" onChange={handleInput} name="task_time" defaultValue={task_time} label="Time" variant='outlined' fullWidth />
+                                        <TextField type="time" onChange={handleInput} name="task_time" defaultValue={task_time} variant='outlined' fullWidth />
                                     </div>
 
                                 </Grid>
@@ -118,6 +122,7 @@ const UpdateTask = ({ data }) => {
                                 </Select>
                             </FormControl>
                         </div>
+                        <br />
                         <div className="select">
                             <FormControl
                                 size="small" fullWidth>
@@ -143,10 +148,10 @@ const UpdateTask = ({ data }) => {
                             </FormControl>
                         </div>
                         <br />
-                        <div>
+                        <div className={Styles.btn_group}>
 
-                            <Button>Cancel</Button>
-                            <Button type="submit" variant="contained">save</Button>
+                            <Button color="secondary" variant="outlined" sx={{ width: "130px", marginRight: "10px" }}>Cancel</Button>
+                            <Button type="submit" variant="contained" sx={{ width: "130px" }}>save</Button>
                         </div>
                     </form>
                 </Grid>

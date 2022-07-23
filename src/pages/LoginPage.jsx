@@ -90,7 +90,7 @@ const LoginPage = () => {
                         <TextField type="password" label="password" fullWidth error={passwordError} name='password' value={password} onChange={handleInput} />
                     </div>
                     <br />
-                    <Button type="submit" variant="contained" fullWidth > Login   {isLoading && <CircularProgress size="medium" color="primary" />}</Button>
+                    <Button type="submit" variant="contained" fullWidth > Login   {isLoading && <CircularProgress size="medium" color="secondary" />}</Button>
                 </form>
             </div>
         </div>

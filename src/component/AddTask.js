@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Accordion, Grid, Select, AccordionDetails, AccordionSummary, InputAdornment, TextField, Typography, MenuItem, InputLabel, FormControl, Button, Container } from "@mui/material"
+import { Accordion, Grid, Select, AccordionDetails, AccordionSummary, InputAdornment, TextField, Typography, MenuItem, InputLabel, FormControl, Button, Container, CircularProgress } from "@mui/material"
 import { FaPlus, FaUser } from "react-icons/fa"
 import { useSelector, useDispatch } from 'react-redux';
 import { AddUserTask, reset } from "../app/features/user/AddtaskSlice"
 import { FetchTask } from "../app/features/user/fetchTask"
 import { FetchAssignUser } from "../app/features/user/AssignUserSlice"
-
+import Styles from "../pages/style/home.module.scss"
 
 export const AddTask = () => {
   const { users } = useSelector(auth => auth.users)
@@ -38,20 +38,20 @@ export const AddTask = () => {
 
 
   }
-  const { isSuccess, task } = useSelector(state => state.task)
+  const { isSuccess, task, isLoading } = useSelector(state => state.task)
   useEffect(() => {
     dispatch(FetchTask())
 
 
 
   }, [isSuccess])
-  console.log(task_time)
+  console.log(isSuccess, task, isLoading)
 
   return (
-    <Container>
-      <Grid container spacing={3}>
+    <Container className={Styles.AddTask}>
+      <Grid container spacing={3} >
 
-        <Grid item sm={6}>
+        <Grid item sm={12}>
 
           <Accordion>
             <AccordionSummary
@@ -59,7 +59,7 @@ export const AddTask = () => {
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-              <Typography variant="h6" component="h2"> ADD TASK</Typography>
+              <Typography variant="h6" component="h2" className={Styles.addTask_header}> ADD TASK</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <form method="post" onSubmit={handleSubmit}>
@@ -94,7 +94,7 @@ export const AddTask = () => {
 
                       <div className="date">
                         <TextField type="date" onChange={handleInput}
-                          value={task_date} name="task_date" label="Date" variant='outlined' fullWidth />
+                          defaultValue={task_date} name="task_date" variant='outlined' fullWidth />
                       </div>
 
 
@@ -102,7 +102,8 @@ export const AddTask = () => {
                     <Grid item sm={6}>
 
                       <div className="timetime">
-                        <TextField type="time" onChange={handleInput} name="task_time" value={task_time} label="Time" variant='outlined' fullWidth />
+                        <TextField type="time" onChange={handleInput} name="task_time" defaultValue={task_time} l
+                          variant='outlined' fullWidth />
                       </div>
 
                     </Grid>
@@ -135,10 +136,10 @@ export const AddTask = () => {
                   </FormControl>
                 </div>
                 <br />
-                <div>
+                <div className={Styles.btn_group}>
 
-                  <Button>Cancel</Button>
-                  <Button type="submit" variant="contained">save</Button>
+                  <Button color="primary" variant="outlined" >Cancel</Button>
+                  <Button type="submit" variant="contained" color="primary">Save </Button>
                 </div>
               </form>
             </AccordionDetails>

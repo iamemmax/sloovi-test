@@ -1,0 +1,134 @@
+.container {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  background-color: #131921;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row wrap;
+  flex-direction: column;
+  overflow-y: scroll;
+  //   padding: 20px;
+  //   margin-top: 4rem;
+
+  & .wrapper {
+    background-color: #fff;
+    height: 100%;
+    // height: auto;
+
+    & .header {
+      font-size: 30px;
+      font-weight: 600;
+      padding: 30px 10px;
+      width: 100%;
+      text-align: center;
+    }
+
+    & .createBtn {
+      float: right;
+      & > .btn {
+        font-weight: 600;
+        font-size: 16px;
+        // color: #eee;
+      }
+    }
+
+    .card {
+      background: #131921;
+
+      & .task_header {
+        color: #fff;
+        font-size: 16px;
+        text-align: center;
+      }
+      & .task_msg {
+        text-align: center;
+        font-size: 16px;
+        font-weight: 600;
+      }
+      & .completed {
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        color: #eee;
+        font-style: italic;
+      }
+      & .deletedIcon {
+        color: red;
+      }
+      & .editIcon {
+        color: #fff;
+      }
+    }
+  }
+
+  & .AddTask {
+    margin: 30px auto;
+    z-index: 9;
+    width: 500px;
+    max-width: 100%;
+    border: 2px solid #3333;
+    border-radius: 10px;
+    display: flex;
+    border-radius: 5px;
+    border-bottom: 2px solid #eee;
+
+    & .addtask_header {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    form {
+      padding: 10px;
+
+      input,
+      select {
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        outline: none;
+        height: 25px;
+      }
+    }
+    & .btn_group {
+      & button {
+        width: 46%;
+        margin: 5px;
+      }
+    }
+  }
+
+  .update_container {
+    background-color: #fff;
+
+    .update_header {
+      font-size: 16px !important;
+      padding: 10px;
+      text-align: center;
+    }
+    form {
+      padding: 10px;
+
+      input,
+      select {
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        outline: none;
+        height: 25px;
+      }
+    }
+    & .btn_group {
+      border: 2px solid red;
+      & button {
+        width: 44%;
+        margin: 5px;
+      }
+    }
+  }
+}

@@ -115,7 +115,7 @@ export const taskSlice = createSlice({
       .addCase(AddUserTask.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.task.push(action.payload);
+        state.task.push(action.payload.results);
 
       })
       .addCase(AddUserTask.rejected, (state, action) => {
