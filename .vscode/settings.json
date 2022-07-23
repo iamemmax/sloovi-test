@@ -1,0 +1,11 @@
+{
+    "editor.acceptSuggestionOnCommitCharacter": false,
+        "editor.formatOnPaste": true,
+            "editor.formatOnSave": true,
+                "editor.formatOnType": true,
+                    "workbench.editor.autoLockGroups": {
+        "default": true,
+            "terminalEditor": false
+    },
+    "workbench.settings.openDefaultSettings": true
+}
