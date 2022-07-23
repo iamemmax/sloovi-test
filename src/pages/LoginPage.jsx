@@ -5,6 +5,9 @@ import { LoginUser, reset } from "../app/features/user/UserSlice"
 // import Loading from '../component/config/Loading';
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
+import Styles from "./style/login.module.scss"
+
+
 const LoginPage = () => {
     const [input, setInput] = useState({
         email: "",
@@ -63,8 +66,8 @@ const LoginPage = () => {
     }
 
     if (isError) {
-      let emailE =  user[1]?.msg
-      
+        let emailE = user[1]?.msg
+
         return toast.error(emailE, {
             toastId: "success1",
             position: "top-left",
@@ -72,21 +75,24 @@ const LoginPage = () => {
     }
 
     return (
-        <div>
-            <Typography variant='h4' component="h2" p={2} >Login Account</Typography>
+        <div className={Styles.container}>
+            <div className={Styles.wrapper}>
 
-            <form onSubmit={handleSubmit} method="post">
-                <div className="username">
-                    <TextField label="email" name='email' error={emailError} value={email} onChange={handleInput} />
-                </div>
-                <br />
-                <div className="password">
+                <Typography variant='h4' component="h2" className={Styles.header} >LOGIN ACCOUNT</Typography>
 
-                    <TextField type="password" label="password" error={passwordError} name='password' value={password} onChange={handleInput} />
-                </div>
-                <br />
-                <Button type="submit" variant="contained" > Login  {isLoading && <CircularProgress size={20} color="secondary" /> }</Button>
-            </form>
+                <form onSubmit={handleSubmit} method="post">
+                    <div className="username">
+                        <TextField label="email" name='email' error={emailError} value={email} onChange={handleInput} fullWidth />
+                    </div>
+                    <br />
+                    <div className="password">
+
+                        <TextField type="password" label="password" fullWidth error={passwordError} name='password' value={password} onChange={handleInput} />
+                    </div>
+                    <br />
+                    <Button type="submit" variant="contained" fullWidth > Login   {isLoading && <CircularProgress size="medium" color="primary" />}</Button>
+                </form>
+            </div>
         </div>
     )
 }

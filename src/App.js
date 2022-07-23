@@ -9,7 +9,7 @@ import { Container, ThemeProvider } from "@mui/material";
 import { theme } from "./component/config/theme";
 
 import LoginPage from './pages/LoginPage';
-import {Homepages} from './pages/Homepages';
+import { Homepages } from './pages/Homepages';
 
 function App() {
 
@@ -20,12 +20,12 @@ function App() {
 
           <div className="App">
             <main>
-          <Container>
+              {/* <Container> */}
               <Routes>
-                <Route path="/" element={<LoginPage/>}/>
-                <Route path="/user" element={<Homepages/>}/>
+                <Route path="/" element={<LoginPage />} />
+                <Route path="/user" element={<Homepages />} />
               </Routes>
-          </Container>
+              {/* </Container> */}
             </main>
           </div>
           <ToastContainer closeOnClick autoClose={3000} />

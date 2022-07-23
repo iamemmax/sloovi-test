@@ -1,0 +1,45 @@
+.container {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  background-color: #131921;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row wrap;
+  flex-direction: column;
+  padding: 20px;
+
+  & .wrapper {
+    background-color: #fff;
+    width: 500px;
+    height: 400px;
+    max-width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row wrap;
+    flex-direction: column;
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    -ms-border-radius: 7px;
+    -o-border-radius: 7px;
+
+    & .header {
+      font-size: 30px;
+      font-weight: 600;
+      padding: 30px 10px;
+    }
+    & form {
+      width: 90%;
+      padding: 10px;
+
+      & > button {
+        background-color: #232f3e;
+        padding: 10px;
+      }
+    }
+  }
+}
