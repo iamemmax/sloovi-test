@@ -7,17 +7,20 @@ import { FetchAssignUser } from "../app/features/user/AssignUserSlice"
 import { AddTask } from '../component/AddTask';
 import Loading from './../component/config/Loading';
 import ListTask from '../component/ListTask';
-
+import { useNavigate } from "react-router-dom"
 import Styles from "./style/home.module.scss"
 
 export const Homepages = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const { tasks, isLoading } = useSelector(state => state.AllTask)
+  const { user } = useSelector(state => state.auth)
   useEffect(() => {
     dispatch(FetchTask())
     dispatch(FetchAssignUser())
-  }, [dispatch])
+    if (!user) navigate("/")
+  }, [dispatch, navigate, user])
 
 
   return (

@@ -6,6 +6,7 @@ import { LoginUser, reset } from "../app/features/user/UserSlice"
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import Styles from "./style/login.module.scss"
+import Loading from './../component/config/Loading';
 
 
 const LoginPage = () => {
@@ -58,9 +59,9 @@ const LoginPage = () => {
     }, [dispatch, message, user, isSuccess]);
 
 
-    // if (isLoading) {
-    //     return <Loading />;
-    // }
+    if (isLoading) {
+        return <Loading />;
+    }
     if (isSuccess && user.want_login === "yes") {
         navigate("/user", { replace: true });
     }
@@ -90,7 +91,7 @@ const LoginPage = () => {
                         <TextField type="password" label="password" fullWidth error={passwordError} name='password' value={password} onChange={handleInput} />
                     </div>
                     <br />
-                    <Button type="submit" variant="contained" fullWidth > Login   {isLoading && <CircularProgress size="medium" color="secondary" />}</Button>
+                    <Button type="submit" variant="contained" fullWidth >    {isLoading ? <Loading /> : "LOGIN"}</Button>
                 </form>
             </div>
         </div>
