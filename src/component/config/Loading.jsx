@@ -5,7 +5,7 @@ const Loading = () => {
   return (
     <>
       <div style={style}>
-        <Oval height="100" width="100" color="grey" ariaLabel="loading" />
+        <Oval height="70" width="70" color="#fff" ariaLabel="loading" />
       </div>
     </>
   );
@@ -19,6 +19,7 @@ const style = {
   height: "100vh",
   position: "fixed",
   inset: "0",
+
 };
 
 export default Loading;

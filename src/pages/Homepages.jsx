@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { Accordion, Grid, AccordionDetails, AccordionSummary, InputAdornment, TextField, Typography, MenuItem, InputLabel, FormControl, Button, Container } from "@mui/material"
-import { FaPlus, FaUser } from "react-icons/fa"
+import React, { useEffect } from 'react'
+import { Grid, Typography, Container } from "@mui/material"
+// import { FaPlus, FaUser } from "react-icons/fa"
 import { useSelector, useDispatch } from 'react-redux';
 import { FetchTask } from "../app/features/user/fetchTask"
 import { FetchAssignUser } from "../app/features/user/AssignUserSlice"
@@ -11,13 +11,13 @@ import ListTask from '../component/ListTask';
 import Styles from "./style/home.module.scss"
 
 export const Homepages = () => {
+  const dispatch = useDispatch()
 
-  const { task, isLoading, isSuccess, isError } = useSelector(state => state.AllTask)
+  const { tasks, isLoading } = useSelector(state => state.AllTask)
   useEffect(() => {
     dispatch(FetchTask())
     dispatch(FetchAssignUser())
-  }, [])
-  const dispatch = useDispatch()
+  }, [dispatch])
 
 
   return (
@@ -26,20 +26,18 @@ export const Homepages = () => {
         <AddTask />
         <br />
         <div>
-          {isLoading ? <Loading /> : <>
-            {/* <div className={Styles.createBtn}>
-              <Button variant="contained" color="secondary" className={Styles.btn}>Create Task</Button>
-            </div> */}
-            <Typography variant="h4" component="h2" className={Styles.header}>ALL TASKS</Typography>
-            <Grid container spacing={3}>
-              {task?.map(x => (
-                <Grid item md={3} lg={4}>
-                  <ListTask key={x.id} data={x} />
-                </Grid>
-              )
-              )}
-            </Grid>
-          </>}
+          {isLoading && <Loading />}
+
+          <Typography variant="h4" component="h2" className={Styles.header}>ALL TASKS</Typography>
+          <Grid container spacing={3}>
+            {tasks?.map(x => (
+              <Grid item xs={12} sm={6} md={4} lg={3}>
+                <ListTask key={x.id} data={x} />
+              </Grid>
+            )
+            )}
+          </Grid>
+
         </div>
 
 
