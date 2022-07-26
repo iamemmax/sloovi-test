@@ -8,10 +8,9 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
-  Button,
-  CircularProgress,
   Container,
 } from "@mui/material";
+import { LoadingButton as Button } from "@mui/lab";
 import { FaUser } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { UpdateUserTask, reset } from "../app/features/user/AddtaskSlice";
@@ -37,7 +36,6 @@ const UpdateTask = ({ data, handleClose, setOpen }) => {
   );
 
   const dispatch = useDispatch();
-  console.log(userData);
   const handleInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -164,12 +162,13 @@ const UpdateTask = ({ data, handleClose, setOpen }) => {
               >
                 Cancel
               </Button>
-              <Button type="submit" variant="contained" sx={{ width: "130px" }}>
-                {isLoading ? (
-                  <CircularProgress size="20px" color="secondary" />
-                ) : (
-                  "UPDATE"
-                )}
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                loading={isLoading}
+              >
+                Update
               </Button>
             </div>
           </form>

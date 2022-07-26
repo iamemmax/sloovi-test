@@ -12,16 +12,14 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
-  Button,
   Container,
-  CircularProgress,
 } from "@mui/material";
+import { LoadingButton as Button } from "@mui/lab";
 import { FaPlus, FaUser } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { AddUserTask, reset } from "../app/features/user/AddtaskSlice";
 import { FetchTask } from "../app/features/user/fetchTask";
 import Styles from "../pages/style/home.module.scss";
-// import { useNavigate } from "react-router-dom";
 
 export const AddTask = () => {
   const { users } = useSelector((auth) => auth.users);
@@ -48,18 +46,16 @@ export const AddTask = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(AddUserTask(input));
+
+    setInterval(() => {
+      dispatch(reset());
+    }, 2000);
   };
-  const { isSuccess, task, isLoading } = useSelector((state) => state.task);
+  const { isSuccess, isLoading } = useSelector((state) => state.task);
+
   useEffect(() => {
-    dispatch(reset());
     dispatch(FetchTask());
   }, [dispatch, isSuccess]);
-
-  if (isSuccess && task[0]?.status === "1") {
-    toast.success("Task added successfully", {
-      toastId: "success1",
-    });
-  }
 
   return (
     <Container className={Styles.AddTask}>
@@ -111,7 +107,7 @@ export const AddTask = () => {
                         <TextField
                           type="date"
                           onChange={handleInput}
-                          defaultValue={task_date}
+                          value={task_date}
                           name="task_date"
                           variant="outlined"
                           fullWidth
@@ -124,7 +120,7 @@ export const AddTask = () => {
                           type="time"
                           onChange={handleInput}
                           name="task_time"
-                          defaultValue={task_time}
+                          value={task_time}
                           variant="outlined"
                           fullWidth
                         />
@@ -158,12 +154,13 @@ export const AddTask = () => {
                   <Button color="primary" variant="outlined">
                     Cancel
                   </Button>
-                  <Button type="submit" variant="contained" color="primary">
-                    {isLoading ? (
-                      <CircularProgress size="20px" color="secondary" />
-                    ) : (
-                      "Save"
-                    )}
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    loading={isLoading}
+                  >
+                    Save
                   </Button>
                 </div>
               </form>

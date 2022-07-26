@@ -18,12 +18,10 @@ function App() {
         <Router>
           <div className="App">
             <main>
-              {/* <Container> */}
               <Routes>
                 <Route path="/" element={<LoginPage />} />
                 <Route path="/task" element={<Homepages />} />
               </Routes>
-              {/* </Container> */}
             </main>
           </div>
           <ToastContainer closeOnClick autoClose={3000} />

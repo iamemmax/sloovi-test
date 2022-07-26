@@ -11,7 +11,6 @@ import { persistStore } from "redux-persist";
 let persistor = persistStore(store);
 ReactDOM.render(
   <React.StrictMode>
-    {/* <Toaster position="top-center" reverseOrder={false} /> */}
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <App />
