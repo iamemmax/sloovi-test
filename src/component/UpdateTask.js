@@ -25,7 +25,6 @@ const UpdateTask = ({ data, handleClose, setOpen }) => {
   let { task_msg, task_date, task_time, assigned_user, is_completed } = data;
   const [input, setInput] = useState({
     task_msg,
-
     task_date,
     task_time,
     assigned_user,
@@ -109,7 +108,7 @@ const UpdateTask = ({ data, handleClose, setOpen }) => {
                       type="time"
                       onChange={handleInput}
                       name="task_time"
-                      defaultValue={task_time}
+                      value={task_time}
                       variant="outlined"
                       fullWidth
                     />

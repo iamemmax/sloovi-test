@@ -6,7 +6,6 @@ import { LoginUser, reset } from "../app/features/user/UserSlice"
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import Styles from "./style/login.module.scss"
-import Loading from './../component/config/Loading';
 // import { toast } from "react-hot-toast"
 // import { FaGlasses } from 'react-icons/fa';
 
@@ -48,10 +47,7 @@ const LoginPage = () => {
 
 
         }
-        // // const handleError = Object.values(input).some((field) => !field)
-        // if (handleError) {
-        //     setDisable(false)
-        // }
+
 
         dispatch(LoginUser(input))
         setTimeout(() => {
@@ -61,29 +57,19 @@ const LoginPage = () => {
     }
     const { isLoading, isSuccess, user } = useSelector((state) => state.auth);
     if (user[0]?.msg) {
-        toast.error(user[0].msg, {
+        const { key, msg } = user[0]
+        toast.error(msg, {
             toastId: "error"
         })
 
     }
 
 
-    // if (isLoading) {
-    //     return <Loading />;
-    // }
+
     if (isSuccess && user.want_login === "yes") {
         navigate("/task", { replace: true });
     }
 
-    // if (isError) {
-    //     let emailE = user[1]?.msg
-
-    //     return toast.error(emailE, {
-    //         toastId: "success1",
-    //         position: "top-left",
-    //     });
-    // }
-    // {user[0]?.msg ? toast.error(user[0]?.msg) : ""}
 
 
     return (
