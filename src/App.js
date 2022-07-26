@@ -21,7 +21,7 @@ function App() {
               {/* <Container> */}
               <Routes>
                 <Route path="/" element={<LoginPage />} />
-                <Route path="/user" element={<Homepages />} />
+                <Route path="/task" element={<Homepages />} />
               </Routes>
               {/* </Container> */}
             </main>

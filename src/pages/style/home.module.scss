@@ -15,6 +15,7 @@
     background-color: #fff;
     height: 100%;
     height: auto;
+    padding: 20px;
 
     & .header {
       font-size: 30px;
@@ -35,6 +36,7 @@
 
     .card {
       background: #131921;
+      cursor: pointer;
 
       & .task_header {
         color: #fff;
@@ -63,7 +65,7 @@
   }
 
   & .AddTask {
-    margin: 30px auto;
+    margin: 10px auto;
     z-index: 9;
     width: 500px;
     max-width: 100%;

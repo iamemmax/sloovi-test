@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Modal, CardHeader, CardActions, CardContent, Avatar, Typography, Box } from '@mui/material';
 
 import IconButton from '@mui/material/IconButton';
@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DeleteUserTask, reset } from "../app/features/user/AddtaskSlice"
 import UpdateTask from './UpdateTask';
 import Styles from "../pages/style/home.module.scss"
-import { FetchSingleTask } from './../app/features/user/fetchTask';
+import { FetchSingleTask, FetchTask } from './../app/features/user/fetchTask';
 import Single from './Single';
 import { CircularProgress } from '@mui/material';
 
@@ -20,15 +20,18 @@ import { CircularProgress } from '@mui/material';
 
 export default function ListTask({ data }) {
   const dispatch = useDispatch()
-  const { singleTask, isLoading } = useSelector(state => state.AllTask)
+  const { singleTask, isSuccess, isLoading } = useSelector(state => state.AllTask)
 
 
 
 
   const handleRemoveTask = (id) => {
     dispatch(DeleteUserTask(id))
-    dispatch(reset())
   }
+  useEffect(() => {
+    FetchTask()
+    dispatch(reset())
+  }, [dispatch, isSuccess])
 
   const style = {
     position: 'absolute',
@@ -96,7 +99,7 @@ export default function ListTask({ data }) {
           </IconButton>
           <IconButton aria-label="edit" sx={{ marginLeft: "11rem" }}>
 
-            <FiEdit className={Styles.editIcon} onClick={handleOpen} />
+            <FiEdit className={Styles.editIcon} size="20px" onClick={handleOpen} />
           </IconButton>
 
 
@@ -107,7 +110,7 @@ export default function ListTask({ data }) {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style} className={Styles.Box}>
-              <UpdateTask data={data} handleClose={handleClose} />
+              <UpdateTask data={data} handleClose={handleClose} setOpen={setOpen} />
 
             </Box>
           </Modal>

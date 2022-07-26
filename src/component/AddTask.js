@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Accordion,
   Grid,
@@ -19,9 +20,8 @@ import { FaPlus, FaUser } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { AddUserTask, reset } from "../app/features/user/AddtaskSlice";
 import { FetchTask } from "../app/features/user/fetchTask";
-// import { FetchAssignUser } from "../app/features/user/AssignUserSlice";
 import Styles from "../pages/style/home.module.scss";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 export const AddTask = () => {
   const { users } = useSelector((auth) => auth.users);
@@ -36,13 +36,9 @@ export const AddTask = () => {
     time_zone: offset,
     is_completed: 0,
   });
-  const [taskMsgErr, setTaskMsgErr] = useState(false);
-  const [taskDateErr, setTaskDateErr] = useState(false);
-  const [taskTimeErr, setTaskTimeErr] = useState(false);
-  const [assigUserErr, setAssigUserErr] = useState(false);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -51,51 +47,19 @@ export const AddTask = () => {
   let { task_msg, task_date, task_time, assigned_user } = input;
   const handleSubmit = (e) => {
     e.preventDefault();
-    setTaskMsgErr(false);
-    setTaskDateErr(false);
-    setTaskTimeErr(false);
-    setAssigUserErr(false);
-
-    if (!taskMsgErr && !taskDateErr && !taskTimeErr && !assigUserErr) {
-      setTaskMsgErr(true);
-      setTaskDateErr(true);
-      setTaskTimeErr(true);
-      setAssigUserErr(true);
-    }
-
-    if (!taskMsgErr) {
-      setTaskMsgErr(true);
-      return;
-    }
-
-    if (!taskDateErr) {
-      setTaskDateErr(true);
-      return;
-    }
-
-    if (!taskTimeErr) {
-      setTaskTimeErr(true);
-      return;
-    }
-
-    if (!assigUserErr) {
-      setAssigUserErr(true);
-      return;
-    }
-
     dispatch(AddUserTask(input));
-    dispatch(reset());
   };
-  const { isSuccess, isLoading } = useSelector((state) => state.task);
+  const { isSuccess, task, isLoading } = useSelector((state) => state.task);
   useEffect(() => {
+    dispatch(reset());
     dispatch(FetchTask());
   }, [dispatch, isSuccess]);
 
-  const handleAddTask = () => {
-    if (!users) {
-      navigate("/");
-    }
-  };
+  if (isSuccess && task[0]?.status === "1") {
+    toast.success("Task added successfully", {
+      toastId: "success1",
+    });
+  }
 
   return (
     <Container className={Styles.AddTask}>
@@ -103,7 +67,7 @@ export const AddTask = () => {
         <Grid item sm={12}>
           <Accordion>
             <AccordionSummary
-              expandIcon={<FaPlus onClick={handleAddTask} />}
+              expandIcon={<FaPlus />}
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
@@ -124,7 +88,6 @@ export const AddTask = () => {
                     label="Task Description"
                     name="task_msg"
                     value={task_msg}
-                    error={taskMsgErr}
                     fullWidth
                     onChange={handleInput}
                     // onChange={handleInput}
@@ -149,7 +112,6 @@ export const AddTask = () => {
                           type="date"
                           onChange={handleInput}
                           defaultValue={task_date}
-                          error={taskDateErr}
                           name="task_date"
                           variant="outlined"
                           fullWidth
@@ -163,7 +125,6 @@ export const AddTask = () => {
                           onChange={handleInput}
                           name="task_time"
                           defaultValue={task_time}
-                          error={taskTimeErr}
                           variant="outlined"
                           fullWidth
                         />
@@ -180,7 +141,6 @@ export const AddTask = () => {
                       labelId="demo-select-small"
                       id="demo-select-small"
                       value={assigned_user}
-                      error={assigUserErr}
                       name="assigned_user"
                       label="Assign user"
                       onChange={handleInput}
@@ -200,7 +160,7 @@ export const AddTask = () => {
                   </Button>
                   <Button type="submit" variant="contained" color="primary">
                     {isLoading ? (
-                      <CircularProgress color="secondary" size="30" />
+                      <CircularProgress size="20px" color="secondary" />
                     ) : (
                       "Save"
                     )}

@@ -19,7 +19,7 @@ export const Homepages = () => {
   useEffect(() => {
     dispatch(FetchTask())
     dispatch(FetchAssignUser())
-    if (!user) navigate("/")
+    if (!user) { navigate("/") }
   }, [dispatch, navigate, user])
 
 

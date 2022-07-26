@@ -9,6 +9,7 @@ import {
   InputLabel,
   FormControl,
   Button,
+  CircularProgress,
   Container,
 } from "@mui/material";
 import { FaUser } from "react-icons/fa";
@@ -17,7 +18,7 @@ import { UpdateUserTask, reset } from "../app/features/user/AddtaskSlice";
 // import { FetchTask } from "../app/features/user/fetchTask";
 import Styles from "../pages/style/home.module.scss";
 
-const UpdateTask = ({ data, handleClose }) => {
+const UpdateTask = ({ data, handleClose, setOpen }) => {
   const { users } = useSelector((auth) => auth.users);
   const date = new Date();
   const offset = date.getTimezoneOffset();
@@ -32,6 +33,9 @@ const UpdateTask = ({ data, handleClose }) => {
     is_completed,
   });
   let userData = { id: data.id, input };
+  const { isLoading, isSuccess, updatedTask } = useSelector(
+    (state) => state.AllTask
+  );
 
   const dispatch = useDispatch();
   console.log(userData);
@@ -46,7 +50,9 @@ const UpdateTask = ({ data, handleClose }) => {
     dispatch(reset());
   };
 
-  console.log(task_time);
+  if (isSuccess && updatedTask?.status === "success") {
+    setOpen(false);
+  }
 
   return (
     <Container className={Styles.update_container}>
@@ -160,7 +166,11 @@ const UpdateTask = ({ data, handleClose }) => {
                 Cancel
               </Button>
               <Button type="submit" variant="contained" sx={{ width: "130px" }}>
-                save
+                {isLoading ? (
+                  <CircularProgress size="20px" color="secondary" />
+                ) : (
+                  "UPDATE"
+                )}
               </Button>
             </div>
           </form>
