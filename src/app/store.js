@@ -19,19 +19,15 @@ import {
 // const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const allReducer = combineReducers({
   auth: authReducer,
-  task:taskReducer,
-  AllTask:UsertaskReducer,
-  users:AssignUser
-
-
- 
+  task: taskReducer,
+  AllTask: UsertaskReducer,
+  users: AssignUser,
 });
 
 const persistConfig = {
   key: "root",
   storage,
   whitelist: ["auth"],
-  
 };
 const persistedReducer = persistReducer(persistConfig, allReducer);
 
@@ -44,6 +40,5 @@ const store = configureStore({
       },
     }),
 });
-
 
 export default store;

@@ -1,17 +1,16 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { AddTask, DeleteTask } from "./userService"
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { AddTask, DeleteTask } from "./userService";
 import axios from "axios";
-const API_URL = "https://stage.api.sloovi.com"
+const API_URL = "https://stage.api.sloovi.com";
 
-
+//@desc:ADD TASK Slice
 
 export const AddUserTask = createAsyncThunk(
   "auth/add task",
   async (userData, thunkAPI) => {
     try {
-      let company_Id = thunkAPI.getState().auth.user.company_id
-      let Token = thunkAPI.getState().auth.user.token
-
+      let company_Id = thunkAPI.getState().auth.user.company_id;
+      let Token = thunkAPI.getState().auth.user.token;
 
       return await AddTask(userData, company_Id, Token);
     } catch (error) {
@@ -26,13 +25,13 @@ export const AddUserTask = createAsyncThunk(
   }
 );
 
+//@desc:Delete TASK Slice
 export const DeleteUserTask = createAsyncThunk(
   "auth/delete task",
   async (userData, thunkAPI) => {
     try {
-      let company_Id = thunkAPI.getState().auth.user.company_id
-      let Token = thunkAPI.getState().auth.user.token
-
+      let company_Id = thunkAPI.getState().auth.user.company_id;
+      let Token = thunkAPI.getState().auth.user.token;
 
       return await DeleteTask(userData, company_Id, Token);
     } catch (error) {
@@ -46,30 +45,31 @@ export const DeleteUserTask = createAsyncThunk(
     }
   }
 );
+//@desc:UPDATE TASK Slice
 export const UpdateUserTask = createAsyncThunk(
   "auth/update task",
   async (userData, thunkAPI) => {
     try {
-      let company_Id = thunkAPI.getState().auth.user.company_id
-      let Token = thunkAPI.getState().auth.user.token
+      let company_Id = thunkAPI.getState().auth.user.company_id;
+      let Token = thunkAPI.getState().auth.user.token;
 
-      let { id, input } = userData
+      let { id, input } = userData;
 
-      var hms = input?.task_time;  // time input string
-      var a = hms.split(':'); // split it at the colons
+      var hms = input?.task_time; // time input string
+      var a = hms.split(":"); // split it at the colons
       // minutes are worth 60 seconds. Hours are worth 60 minutes.
-      var taskTimeSeconds = (+a[0]) * 60 * 60 + (+a[1]);
+      var taskTimeSeconds = +a[0] * 60 * 60 + +a[1];
 
-      const response = await axios.put(`${API_URL}/task/lead_465c14d0e99e4972b6b21ffecf3dd691/${id}?company_id=${company_Id}`,
-        { ...input, task_time: taskTimeSeconds }, {
-        headers: {
-
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + Token,
-
+      const response = await axios.put(
+        `${API_URL}/task/lead_465c14d0e99e4972b6b21ffecf3dd691/${id}?company_id=${company_Id}`,
+        { ...input, task_time: taskTimeSeconds },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + Token,
+          },
         }
-      }
       );
       return response.data;
     } catch (error) {
@@ -83,7 +83,6 @@ export const UpdateUserTask = createAsyncThunk(
     }
   }
 );
-
 
 const initialState = {
   task: [],
@@ -116,7 +115,6 @@ export const taskSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.task.push(action.payload.results);
-
       })
       .addCase(AddUserTask.rejected, (state, action) => {
         state.isLoading = false;
@@ -134,7 +132,6 @@ export const taskSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.updatedTask = action.payload;
-
       })
       .addCase(UpdateUserTask.rejected, (state, action) => {
         state.isLoading = false;
@@ -152,7 +149,6 @@ export const taskSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.deletedTask = action.payload;
-
       })
       .addCase(DeleteUserTask.rejected, (state, action) => {
         state.isLoading = false;
@@ -160,13 +156,9 @@ export const taskSlice = createSlice({
         state.isError = true;
         state.deletedTask = null;
         state.message = action.payload;
-      })
-
+      });
   },
 });
-
-
-// login user
 
 export const { reset } = taskSlice.actions;
 export default taskSlice.reducer;

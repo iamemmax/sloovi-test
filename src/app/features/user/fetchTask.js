@@ -1,15 +1,12 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { GetTask, GetSingleTask } from "./userService"
-
-
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { GetTask, GetSingleTask } from "./userService";
 
 export const FetchTask = createAsyncThunk(
   "auth/fetch all tasks",
   async (_, thunkAPI) => {
     try {
-      let company_Id = thunkAPI.getState().auth.user.company_id
-      let Token = thunkAPI.getState().auth.user.token
-
+      let company_Id = thunkAPI.getState().auth.user.company_id;
+      let Token = thunkAPI.getState().auth.user.token;
 
       return await GetTask(company_Id, Token);
     } catch (error) {
@@ -27,9 +24,8 @@ export const FetchSingleTask = createAsyncThunk(
   "auth/fetch single task",
   async (id, thunkAPI) => {
     try {
-      let company_Id = thunkAPI.getState().auth.user.company_id
-      let Token = thunkAPI.getState().auth.user.token
-
+      let company_Id = thunkAPI.getState().auth.user.company_id;
+      let Token = thunkAPI.getState().auth.user.token;
 
       return await GetSingleTask(id, company_Id, Token);
     } catch (error) {
@@ -43,7 +39,6 @@ export const FetchSingleTask = createAsyncThunk(
     }
   }
 );
-
 
 const initialState = {
   tasks: [],
@@ -97,12 +92,9 @@ export const fetchTaskSlice = createSlice({
         state.isSuccess = false;
         state.isError = true;
         state.message = action.payload;
-      })
-
-
+      });
   },
 });
-
 
 // login user
 

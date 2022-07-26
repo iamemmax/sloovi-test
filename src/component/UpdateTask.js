@@ -108,7 +108,7 @@ const UpdateTask = ({ data, handleClose, setOpen }) => {
                       type="time"
                       onChange={handleInput}
                       name="task_time"
-                      value={task_time}
+                      defaultValue={task_time}
                       variant="outlined"
                       fullWidth
                     />
