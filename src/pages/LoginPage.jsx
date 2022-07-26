@@ -57,7 +57,7 @@ const LoginPage = () => {
     }
     const { isLoading, isSuccess, user } = useSelector((state) => state.auth);
     if (user[0]?.msg) {
-        const { key, msg } = user[0]
+        const { msg } = user[0]
         toast.error(msg, {
             toastId: "error"
         })
